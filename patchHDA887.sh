@@ -254,6 +254,9 @@ function _patchHDA()
   #
   cd /tmp/AppleHDA887.kext/Contents/PlugIns/AppleHDALoader.kext/Contents/MacOS
   SearchAndReplace "8419d411" "8708ec10" "AppleHDA"
+  SearchAndReplace "8b19d411" "8708ec10" "AppleHDA"
+#  SearchAndReplace "8319d411" "00000000" "AppleHDA"        # For 10.11.x
+  SearchAndReplace "8a19d411" "00000000" "AppleHDA"
   SearchAndReplace "41C60600488BBB68" "41C60601488BBB68" "AppleHDA"
   SearchAndReplace "41C6864301000000" "41C6864301000001" "AppleHDA"
   SearchAndReplace "536F756E6420617373657274696F6E20" "00000000000000000000000000000000" "AppleHDA"
@@ -308,6 +311,7 @@ function main()
   read -p "Do you want to copy the patched kext to ${gExtensionsDirectory[1]}? (y/n) " choice01
   case ${choice01} in
     y|Y|"" )
+      rm -rf "${gExtensionsDirectory[1]}"/AppleHDA887.kext
       cp -RX /tmp/AppleHDA887.kext ${gExtensionsDirectory[1]}
       chmod -R 755 ${gExtensionsDirectory[1]}
       chown -R 0:0 ${gExtensionsDirectory[1]}
@@ -315,8 +319,8 @@ function main()
       kextcache -u /
       ;;
      * )
-	  mv /tmp/AppHDA887.kext ~/Desktop
-	  ;;
+      mv /tmp/AppHDA887.kext ~/Desktop
+      ;;
   esac
 }
 
